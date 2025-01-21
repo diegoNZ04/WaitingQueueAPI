@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Models;
 
 namespace QueueSystem.Infra.Data
 {
@@ -9,21 +9,21 @@ namespace QueueSystem.Infra.Data
         {
         }
 
-        public DbSet<Client> Clients { get; set; } = null!;
+        public DbSet<ClientModel> Clients { get; set; } = null!;
 
-        public DbSet<Queue> Queues { get; set; } = null!;
+        public DbSet<QueueModel> Queues { get; set; } = null!;
 
-        public DbSet<Background> Backgrounds { get; set; } = null!;
+        public DbSet<BackgroundModel> Backgrounds { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Client>()
-                .HasOne<Background>()
+            modelBuilder.Entity<ClientModel>()
+                .HasOne<BackgroundModel>()
                 .WithOne()
-                .HasForeignKey<Background>(e => e.ClientId)
+                .HasForeignKey<BackgroundModel>(e => e.ClientId)
                 .IsRequired();
 
-            modelBuilder.Entity<Queue>()
+            modelBuilder.Entity<QueueModel>()
                 .HasMany(e => e.Clients)
                 .WithOne()
                 .HasForeignKey("QueueId")

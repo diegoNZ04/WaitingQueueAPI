@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QueueSystem.Domain\QueueSystem.Domain.csproj" />
+    <ProjectReference Include="..\QueueSystem.Infra\QueueSystem.Infra.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

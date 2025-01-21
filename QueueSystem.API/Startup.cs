@@ -1,5 +1,7 @@
 
 
+using QueueSystem.Infra.Data;
+
 namespace QueueSystem.API
 {
     public class Startup
@@ -14,6 +16,8 @@ namespace QueueSystem.API
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.AddInfrastructure(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
