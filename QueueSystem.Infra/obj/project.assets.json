@@ -1599,19 +1599,6 @@
           }
         }
       },
-      "QueueSystem.Application/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v9.0",
-        "dependencies": {
-          "QueueSystem.Domain": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/QueueSystem.Application.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/QueueSystem.Application.dll": {}
-        }
-      },
       "QueueSystem.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -4725,11 +4712,6 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "QueueSystem.Application/1.0.0": {
-      "type": "project",
-      "path": "../QueueSystem.Application/QueueSystem.Application.csproj",
-      "msbuildProject": "../QueueSystem.Application/QueueSystem.Application.csproj"
-    },
     "QueueSystem.Domain/1.0.0": {
       "type": "project",
       "path": "../QueueSystem.Domain/QueueSystem.Domain.csproj",
@@ -4742,7 +4724,6 @@
       "Microsoft.EntityFrameworkCore.Design >= 9.0.1",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.1",
       "Microsoft.EntityFrameworkCore.Tools >= 9.0.1",
-      "QueueSystem.Application >= 1.0.0",
       "QueueSystem.Domain >= 1.0.0"
     ]
   },
@@ -4779,9 +4760,6 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Application\\QueueSystem.Application.csproj": {
-              "projectPath": "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Application\\QueueSystem.Application.csproj"
-            },
             "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Domain\\QueueSystem.Domain.csproj": {
               "projectPath": "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Domain\\QueueSystem.Domain.csproj"
             }

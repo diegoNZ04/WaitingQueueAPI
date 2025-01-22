@@ -1115,9 +1115,6 @@
       "QueueSystem.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
-        "dependencies": {
-          "QueueSystem.Infra": "1.0.0"
-        },
         "compile": {
           "bin/placeholder/QueueSystem.Domain.dll": {}
         },
@@ -1130,7 +1127,8 @@
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.1",
-          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.1"
+          "Microsoft.EntityFrameworkCore.SqlServer": "9.0.1",
+          "QueueSystem.Domain": "1.0.0"
         },
         "compile": {
           "bin/placeholder/QueueSystem.Infra.dll": {}
