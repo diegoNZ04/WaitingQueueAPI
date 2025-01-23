@@ -3,9 +3,9 @@ using QueueSystem.Domain.Models;
 
 namespace QueueSystem.Infra.Interfaces
 {
-    public interface IQueueService
+    public interface IClientService
     {
-        public Task<ClientModel> AddClientToQueueAsync(int queueId, ClientDto clientDto);
+        public Task<ClientModel> AddClientToQueueAsync(int queueId, ClientDto clienteDto);
 
         public Task<int?> GetClientPositionAsync(int queueId, int clientId);
 

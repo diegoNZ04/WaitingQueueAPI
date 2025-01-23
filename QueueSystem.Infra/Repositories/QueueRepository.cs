@@ -13,24 +13,20 @@ namespace QueueSystem.Infra.Repositories
         {
             _context = context;
         }
-
         public async Task<QueueModel> GetQueueByIdAsync(int queueId)
         {
-            var queue = await _context.Queues.Include(q => q.Clients).FirstOrDefaultAsync(q => q.Id == queueId) ?? throw new InvalidOperationException($"Queue with ID {queueId} not found.");
+            var queue = await _context.Queues.FirstOrDefaultAsync(q => q.Id == queueId);
+            if (queue == null)
+            {
+                throw new InvalidOperationException($"Queue with ID '{queueId}' not found.");
+            }
             return queue;
         }
 
-        public async Task AddClientToQueueAsync(QueueModel queue, ClientModel client)
+        public async Task UpdateQueueAsync(QueueModel queue)
         {
-            queue.Clients.Add(client);
+            _context.Queues.Update(queue);
             await _context.SaveChangesAsync();
         }
-
-        public async Task RemoveClientFromQueueAsync(QueueModel queue, ClientModel client)
-        {
-            queue.Clients.Remove(client);
-            await _context.SaveChangesAsync();
-        }
-
     }
 }

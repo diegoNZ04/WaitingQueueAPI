@@ -13,7 +13,7 @@ namespace QueueSystem.Infra.Data
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IQueueService, QueueService>();
+            services.AddScoped<IClientService, ClientService>();
 
             return services;
         }

@@ -5,13 +5,13 @@ using QueueSystem.Infra.Interfaces;
 namespace QueueSystem.API.Controllers
 {
     [Route("[controller]")]
-    public class QueueController : ControllerBase
+    public class ClientController : ControllerBase
     {
-        private readonly IQueueService _queueService;
+        private readonly IClientService _clientService;
 
-        public QueueController(IQueueService queueService)
+        public ClientController(IClientService clientService)
         {
-            _queueService = queueService;
+            _clientService = clientService;
         }
 
         [HttpGet("{queueId}/clients/{clientId}/position")]
@@ -19,7 +19,7 @@ namespace QueueSystem.API.Controllers
         {
             try
             {
-                var position = await _queueService.GetClientPositionAsync(queueId, clientId);
+                var position = await _clientService.GetClientPositionAsync(queueId, clientId);
                 return Ok(new { Position = position });
             }
             catch (Exception ex)
@@ -33,7 +33,7 @@ namespace QueueSystem.API.Controllers
         {
             try
             {
-                var client = await _queueService.AddClientToQueueAsync(queueId, clientDto);
+                var client = await _clientService.AddClientToQueueAsync(queueId, clientDto);
                 return CreatedAtAction(nameof(GetClientPosition), new { queueId, clientId = client.Id }, client);
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace QueueSystem.API.Controllers
         {
             try
             {
-                await _queueService.RemoveClientFromQueueAsync(queueId, clientId);
+                await _clientService.RemoveClientFromQueueAsync(queueId, clientId);
                 return NoContent();
             }
             catch (Exception ex)
