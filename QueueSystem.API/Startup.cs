@@ -1,6 +1,10 @@
 
 
+using Microsoft.EntityFrameworkCore;
 using QueueSystem.Infra.Data;
+using QueueSystem.Infra.Interfaces;
+using QueueSystem.Infra.Repositories;
+using QueueSystem.Infra.Services;
 
 namespace QueueSystem.API
 {
@@ -17,7 +21,12 @@ namespace QueueSystem.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddInfrastructure(Configuration);
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped<IQueueRepository, QueueRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IClientService, ClientService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
