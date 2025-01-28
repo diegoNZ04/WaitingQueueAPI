@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using QueueSystem.Domain.Dtos;
-using QueueSystem.Infra.Interfaces;
+using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.API.Controllers
 {
@@ -15,46 +15,32 @@ namespace QueueSystem.API.Controllers
             _clientService = clientService;
         }
 
-        [HttpGet("{queueId}/clients/{clientId}/position")]
-        public async Task<IActionResult> GetClientPosition(int queueId, int clientId)
+        [HttpPost("/queue")]
+        public async Task<IActionResult> RegisterClient([FromBody] RegisterClientRequest request)
         {
-            try
-            {
-                var position = await _clientService.GetClientPositionAsync(queueId, clientId);
-                return Ok(new { Position = position });
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { Error = ex.Message });
-            }
+            var client = await _clientService.RegisterClientAsync(
+                request.Name, request.Category, request.Priority, request.QueueId
+                );
+
+            var position = await _clientService.ConsultPositionAsync(client.Id);
+
+            return Ok(new { client.Id, Position = position });
         }
 
-        [HttpPost("{queueId}/clients")]
-        public async Task<IActionResult> RegisterClient(int queueId, [FromBody] ClientDto clientDto)
+        [HttpGet("api/queue/{id}/position")]
+        public async Task<IActionResult> ConsultPosition(int id)
         {
-            try
-            {
-                var client = await _clientService.AddClientToQueueAsync(queueId, clientDto);
-                return CreatedAtAction(nameof(GetClientPosition), new { queueId, clientId = client.Id }, client);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+            var position = await _clientService.ConsultPositionAsync(id);
+
+            return Ok(new { Position = position });
         }
 
-        [HttpDelete("{queueId}/clients/{clientId}")]
-        public async Task<IActionResult> CancelClient(int queueId, int clientId)
+        [HttpPut("api/queue/{id}")]
+        public async Task<IActionResult> Unsubscribe(int id)
         {
-            try
-            {
-                await _clientService.RemoveClientFromQueueAsync(queueId, clientId);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(new { Error = ex.Message });
-            }
+            await _clientService.UnsubscribeAsync(id);
+
+            return Ok();
         }
     }
 }

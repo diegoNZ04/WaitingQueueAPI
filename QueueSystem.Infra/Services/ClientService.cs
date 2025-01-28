@@ -2,10 +2,11 @@
 
 using QueueSystem.Domain.Models;
 using QueueSystem.Infra.Repositories.Interfaces;
+using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.Infra.Services
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
 

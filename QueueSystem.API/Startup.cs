@@ -2,9 +2,10 @@
 
 using Microsoft.EntityFrameworkCore;
 using QueueSystem.Infra.Data;
-using QueueSystem.Infra.Interfaces;
 using QueueSystem.Infra.Repositories;
+using QueueSystem.Infra.Repositories.Interfaces;
 using QueueSystem.Infra.Services;
+using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.API
 {
@@ -27,8 +28,8 @@ namespace QueueSystem.API
             */
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseInMemoryDatabase("QueueDb"));
-                
-            services.AddScoped<IQueueRepository, QueueRepository>();
+
+
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IClientService, ClientService>();
         }
