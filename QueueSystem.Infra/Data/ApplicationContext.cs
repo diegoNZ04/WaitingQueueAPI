@@ -19,15 +19,13 @@ public class ApplicationContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ClientModel>()
-            .HasOne<BackgroundModel>()
-            .WithOne()
-            .HasForeignKey<BackgroundModel>(e => e.ClientId)
-            .IsRequired();
+            .HasOne(c => c.Queue)
+            .WithMany(q => q.Clients)
+            .HasForeignKey(c => c.QueueId);
 
-        modelBuilder.Entity<QueueModel>()
-            .HasMany(e => e.Clients)
-            .WithOne()
-            .HasForeignKey("QueueId")
-            .IsRequired();
+        modelBuilder.Entity<BackgroundModel>()
+            .HasOne(b => b.Client)
+            .WithMany()
+            .HasForeignKey(b => b.ClientId);
     }
 }

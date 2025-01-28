@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QueueSystem.Infra")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e965a78cb80a497d2720eb8d0db1018deb60bf11")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2a319016b813e4b9e74cad750ba46b64f1855a7")]
 [assembly: System.Reflection.AssemblyProductAttribute("QueueSystem.Infra")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QueueSystem.Infra")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

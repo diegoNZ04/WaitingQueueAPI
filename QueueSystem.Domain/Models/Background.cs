@@ -6,6 +6,8 @@ namespace QueueSystem.Domain.Models
 
         public int ClientId { get; set; }
 
-        public DateTime CalledAt { get; set; } = DateTime.Now;
+        public DateTime CalledAt { get; set; } = DateTime.UtcNow;
+
+        public ClientModel Client { get; set; } = null!;
     }
 }

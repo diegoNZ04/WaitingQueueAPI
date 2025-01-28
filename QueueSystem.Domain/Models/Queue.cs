@@ -6,6 +6,6 @@ namespace QueueSystem.Domain.Models
 
         public string Category { get; set; } = string.Empty;
 
-        public ICollection<ClientModel> Clients { get; } = new List<ClientModel>();
+        public List<ClientModel> Clients { get; } = [];
     }
 }

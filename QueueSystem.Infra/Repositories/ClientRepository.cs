@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using QueueSystem.Domain.Models;
 using QueueSystem.Infra.Data;
-using QueueSystem.Infra.Interfaces;
+using QueueSystem.Infra.Repositories.Interfaces;
 
 namespace QueueSystem.Infra.Repositories
 {
@@ -14,34 +14,37 @@ namespace QueueSystem.Infra.Repositories
             _context = context;
         }
 
-        public async Task<List<ClientModel>> GetClientByIdsAsync(List<int> clientIds)
+        public async Task AddAsync(ClientModel client)
         {
-            return await _context.Clients.Where(c => clientIds.Contains(c.Id)).ToListAsync();
-        }
-
-        public async Task AddClientToQueueAsync(QueueModel queue, ClientModel client)
-        {
-            queue.Clients.Add(client);
+            await _context.Clients.AddAsync(client);
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveClientFromQueueAsync(QueueModel queue, ClientModel client)
+        public async Task DeleteAsync(int id)
         {
-            queue.Clients.Remove(client);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<ClientModel> GetClientByIdAsync(int clientId)
-        {
-            var client = await _context.Clients.FindAsync(clientId);
-            if (client == null)
+            var client = await _context.Clients.FindAsync(id);
+            if (client != null)
             {
-                throw new Exception($"Client with ID {clientId} not found.");
+                _context.Clients.Remove(client);
+                await _context.SaveChangesAsync();
             }
-            return client;
         }
 
-        public async Task UpdateClientAsync(ClientModel client)
+        public Task<ClientModel> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<ClientModel>> GetByQueueIdAsync(int queueId)
+        {
+            return await _context.Clients
+                .Where(c => c.QueueId == queueId)
+                .OrderBy(c => c.Priority)
+                .ThenBy(c => c.Status)
+                .ToListAsync();
+        }
+
+        public async Task UpdateAsync(ClientModel client)
         {
             _context.Clients.Update(client);
             await _context.SaveChangesAsync();

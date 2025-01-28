@@ -1,5 +1,3 @@
-using QueueSystem.Domain.Enums;
-
 namespace QueueSystem.Domain.Models
 {
     public class ClientModel
@@ -10,8 +8,12 @@ namespace QueueSystem.Domain.Models
 
         public string Category { get; set; } = string.Empty;
 
-        public ClientPriority Priority { get; set; }
+        public string Priority { get; set; } = string.Empty;
 
-        public ClientStatus Status { get; set; }
+        public string Status { get; set; } = "Em espera";
+
+        public int QueueId { get; set; }
+
+        public QueueModel Queue { get; set; } = null!;
     }
 }
