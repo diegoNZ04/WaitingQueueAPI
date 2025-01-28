@@ -4,7 +4,8 @@ using QueueSystem.Infra.Interfaces;
 
 namespace QueueSystem.API.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/[controller]")]
     public class ClientController : ControllerBase
     {
         private readonly IClientService _clientService;

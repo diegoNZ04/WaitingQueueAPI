@@ -21,9 +21,13 @@ namespace QueueSystem.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
+            /*
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+            */
+            services.AddDbContext<ApplicationContext>(options =>
+                options.UseInMemoryDatabase("QueueDb"));
+                
             services.AddScoped<IQueueRepository, QueueRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IClientService, ClientService>();
@@ -37,6 +41,7 @@ namespace QueueSystem.API
             {
                 app.UseSwaggerUI(options =>
                 {
+                    app.UseSwagger();
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     options.RoutePrefix = string.Empty;
                 });

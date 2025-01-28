@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "M093V0twYfo=",
+  "dgSpecHash": "POHDGwQxx/8=",
   "success": true,
   "projectFilePath": "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.API\\QueueSystem.API.csproj",
   "expectedPackageFiles": [
@@ -24,6 +24,7 @@
     "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.1\\microsoft.entityframeworkcore.abstractions.9.0.1.nupkg.sha512",
     "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\9.0.1\\microsoft.entityframeworkcore.analyzers.9.0.1.nupkg.sha512",
     "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.entityframeworkcore.design\\9.0.1\\microsoft.entityframeworkcore.design.9.0.1.nupkg.sha512",
+    "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.entityframeworkcore.inmemory\\9.0.1\\microsoft.entityframeworkcore.inmemory.9.0.1.nupkg.sha512",
     "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\9.0.1\\microsoft.entityframeworkcore.relational.9.0.1.nupkg.sha512",
     "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\9.0.1\\microsoft.entityframeworkcore.sqlserver.9.0.1.nupkg.sha512",
     "C:\\Users\\Samsung\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
