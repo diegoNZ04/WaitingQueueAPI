@@ -1,5 +1,3 @@
-
-
 namespace QueueSystem.Domain.Dtos
 {
     public class RegisterClientRequest

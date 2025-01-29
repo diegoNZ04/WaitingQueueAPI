@@ -1,3 +1,4 @@
+
 namespace QueueSystem.Domain.Dtos
 {
     public class CallNextClientResponse

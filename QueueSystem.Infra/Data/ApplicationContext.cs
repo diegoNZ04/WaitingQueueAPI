@@ -10,6 +10,7 @@ public class ApplicationContext : DbContext
     {
     }
 
+    public DbSet<UserModel> Users { get; set; } = null!;
     public DbSet<ClientModel> Clients { get; set; } = null!;
 
     public DbSet<QueueModel> Queues { get; set; } = null!;
