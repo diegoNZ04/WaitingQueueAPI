@@ -15,7 +15,7 @@ namespace QueueSystem.API.Controllers
             _clientService = clientService;
         }
 
-        [HttpPost("/queue")]
+        [HttpPost("api/client")]
         public async Task<IActionResult> RegisterClient([FromBody] RegisterClientRequest request)
         {
             var client = await _clientService.RegisterClientAsync(
@@ -27,7 +27,7 @@ namespace QueueSystem.API.Controllers
             return Ok(new { client.Id, Position = position });
         }
 
-        [HttpGet("api/queue/{id}/position")]
+        [HttpGet("api/client/{id}/position")]
         public async Task<IActionResult> ConsultPosition(int id)
         {
             var position = await _clientService.ConsultPositionAsync(id);
@@ -35,7 +35,7 @@ namespace QueueSystem.API.Controllers
             return Ok(new { Position = position });
         }
 
-        [HttpPut("api/queue/{id}")]
+        [HttpPut("api/client/{id}")]
         public async Task<IActionResult> Unsubscribe(int id)
         {
             await _clientService.UnsubscribeAsync(id);

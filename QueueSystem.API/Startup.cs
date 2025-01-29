@@ -31,7 +31,10 @@ namespace QueueSystem.API
 
 
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IQueueRepository, QueueRepository>();
+            services.AddScoped<IBackgroundRepository, BackgroundRepository>();
             services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<IQueueService, QueueService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,9 +43,10 @@ namespace QueueSystem.API
 
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    app.UseSwagger();
+
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     options.RoutePrefix = string.Empty;
                 });
