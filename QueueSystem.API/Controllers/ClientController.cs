@@ -35,7 +35,7 @@ namespace QueueSystem.API.Controllers
             return Ok(new { Position = position });
         }
 
-        [HttpPut("api/client/{id}")]
+        [HttpDelete("api/client/{id}")]
         public async Task<IActionResult> Unsubscribe(int id)
         {
             await _clientService.UnsubscribeAsync(id);

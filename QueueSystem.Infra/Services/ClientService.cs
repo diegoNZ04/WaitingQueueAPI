@@ -47,9 +47,9 @@ namespace QueueSystem.Infra.Services
 
             if (client != null)
             {
-                client.Status = "Desistente";
-                await _clientRepository.UpdateAsync(client);
+                await _clientRepository.DeleteAsync(client.Id);
             }
+
         }
 
 

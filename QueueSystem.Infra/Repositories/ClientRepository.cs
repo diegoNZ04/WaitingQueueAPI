@@ -30,9 +30,9 @@ namespace QueueSystem.Infra.Repositories
             }
         }
 
-        public Task<ClientModel> GetByIdAsync(int id)
+        public async Task<ClientModel> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Clients.FindAsync(id);
         }
 
         public async Task<List<ClientModel>> GetByQueueIdAsync(int queueId)
