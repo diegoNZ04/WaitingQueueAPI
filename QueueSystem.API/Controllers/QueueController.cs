@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QueueSystem.Infra.Services.Interfaces;
 
@@ -12,6 +13,8 @@ namespace QueueSystem.API.Controllers
         {
             _queueService = queueService;
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("api/queue")]
         public async Task<IActionResult> ListClientsInQueue([FromQuery] int queueId)
         {
@@ -25,6 +28,7 @@ namespace QueueSystem.API.Controllers
             return Ok(clients);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("api/queue/next")]
         public async Task<IActionResult> CallNextClient([FromQuery] int queueId)
         {

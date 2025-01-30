@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using QueueSystem.Application.Implements.Interfaces;
 using QueueSystem.Domain.Entities;
@@ -9,29 +10,36 @@ namespace QueueSystem.Application.Implements
 {
     public class JwtTokenGenerator : IJwtTokenGenerator
     {
-        private const string SecretKey = "uhaE2LveYRr+T1Ay5DS0kmbhX//k+Hk+gtf8f9QSqpQ=";
-        private const int ExpirationMinutes = 60;
+        private readonly IConfiguration _configuration;
+        public JwtTokenGenerator(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string GenerateToken(User user)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim>
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtKey = _configuration["Jwt:Key"];
+            if (string.IsNullOrEmpty(jwtKey))
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                throw new ArgumentNullException(nameof(jwtKey), "JWT key não está configurada.");
+            }
+            var key = Encoding.ASCII.GetBytes(jwtKey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(
+                [
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role.ToString())
+                ]),
+                Expires = DateTime.UtcNow.AddMinutes(double.TryParse(_configuration["Jwt:ExpireMinutes"], out double expireMinutes) ? expireMinutes : 0),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"]
             };
 
-            var token = new JwtSecurityToken(
-                issuer: "QueueSystem",
-                audience: "QueueSystemUsers",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(ExpirationMinutes),
-                signingCredentials: credentials
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
     }
 }

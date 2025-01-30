@@ -16,7 +16,7 @@ namespace QueueSystem.API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("api/auth/register")]
+        [HttpPost("api/account/register")]
         public async Task<IActionResult> RegisterUser([FromBody] RegisterUserRequest request)
         {
             var result = await _accountService.RegisterUserAsync(request);
@@ -27,6 +27,14 @@ namespace QueueSystem.API.Controllers
             }
 
             return Ok(new { message = "Usuário registrado com sucesso!" });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("api/account/login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var token = await _accountService.LoginUserAsync(request);
+            return Ok(new { Token = token });
         }
     }
 }

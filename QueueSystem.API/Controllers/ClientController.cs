@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QueueSystem.Application.Dtos;
 using QueueSystem.Infra.Services.Interfaces;
@@ -15,6 +16,7 @@ namespace QueueSystem.API.Controllers
             _clientService = clientService;
         }
 
+        [Authorize(Roles = "Admin,User")]
         [HttpPost("api/client")]
         public async Task<IActionResult> RegisterClient([FromBody] RegisterClientRequest request)
         {
@@ -27,6 +29,7 @@ namespace QueueSystem.API.Controllers
             return Ok(new { client.Id, Position = position });
         }
 
+        [Authorize(Roles = "Admin,User")]
         [HttpGet("api/client/{id}/position")]
         public async Task<IActionResult> ConsultPosition(int id)
         {
@@ -35,6 +38,7 @@ namespace QueueSystem.API.Controllers
             return Ok(new { Position = position });
         }
 
+        [Authorize(Roles = "Admin,User")]
         [HttpDelete("api/client/{id}")]
         public async Task<IActionResult> Unsubscribe(int id)
         {

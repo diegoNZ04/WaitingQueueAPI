@@ -1,4 +1,7 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Data;
 using QueueSystem.Infra.Repositories;
@@ -35,6 +38,38 @@ namespace QueueSystem.API
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IQueueService, QueueService>();
             services.AddScoped<IAccountService, AccountService>();
+
+            var jwtSettings = Configuration.GetSection("Jwt");
+            var keyString = jwtSettings["Key"];
+            if (string.IsNullOrEmpty(keyString))
+            {
+                throw new ArgumentNullException("Jwt:Key", "JWT key não pode ser nula ou vazia.");
+            }
+            var key = Encoding.ASCII.GetBytes(keyString);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -53,7 +88,10 @@ namespace QueueSystem.API
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
