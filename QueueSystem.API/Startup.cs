@@ -2,6 +2,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using QueueSystem.Application.Implements;
+using QueueSystem.Application.Implements.Interfaces;
 using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Data;
 using QueueSystem.Infra.Repositories;
@@ -38,6 +40,7 @@ namespace QueueSystem.API
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IQueueService, QueueService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             var jwtSettings = Configuration.GetSection("Jwt");
             var keyString = jwtSettings["Key"];
