@@ -33,8 +33,15 @@ namespace QueueSystem.API.Controllers
         [HttpPost("api/account/login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var token = await _accountService.LoginUserAsync(request);
-            return Ok(new { Token = token });
+            var response = await _accountService.LoginUserAsync(request.Email, request.Password);
+            return Ok(response);
+        }
+
+        [HttpPost("api/account/refresh-token")]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var response = await _accountService.RefreshTokenAsync(request.RefreshToken);
+            return Ok(response);
         }
     }
 }

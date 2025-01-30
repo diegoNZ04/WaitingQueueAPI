@@ -9,5 +9,7 @@ namespace QueueSystem.Domain.Entities
         public string Email { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public UserRole Role { get; set; }
+        public string RefreshToken { get; set; } = string.Empty;
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

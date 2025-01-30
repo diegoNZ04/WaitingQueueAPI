@@ -4,6 +4,7 @@ namespace QueueSystem.Application.Implements.Interfaces
 {
     public interface IJwtTokenGenerator
     {
-        public string GenerateToken(User user);
+        public string GenerateAccessToken(User user);
+        public string GenerateRefreshToken();
     }
 }

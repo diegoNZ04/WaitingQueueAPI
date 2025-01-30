@@ -1,8 +1,10 @@
 
+using Microsoft.EntityFrameworkCore;
 using QueueSystem.Application.Dtos;
 using QueueSystem.Application.Implements.Interfaces;
 using QueueSystem.Domain.Entities;
 using QueueSystem.Domain.Entities.Interfaces;
+using QueueSystem.Infra.Data;
 using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.Infra.Services
@@ -11,10 +13,15 @@ namespace QueueSystem.Infra.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
-        public AccountService(IAccountRepository accountRepository, IJwtTokenGenerator jwtTokenGenerator)
+        private readonly ApplicationContext _context;
+        public AccountService(
+            IAccountRepository accountRepository,
+            IJwtTokenGenerator jwtTokenGenerator,
+            ApplicationContext context)
         {
             _accountRepository = accountRepository;
             _jwtTokenGenerator = jwtTokenGenerator;
+            _context = context;
         }
         public async Task<ServiceResponse> RegisterUserAsync(RegisterUserRequest request)
         {
@@ -47,21 +54,56 @@ namespace QueueSystem.Infra.Services
             };
         }
 
-        public async Task<string> LoginUserAsync(LoginRequest request)
+        public async Task<LoginResponse> LoginUserAsync(string email, string password)
         {
-            var user = await _accountRepository.GetByEmailAsync(request.Email);
+            var user = await _accountRepository.GetByEmailAsync(email);
 
             if (user == null)
             {
                 throw new Exception("Usuário não encontrado.");
             }
 
-            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
+            if (!BCrypt.Net.BCrypt.Verify(password, user.PasswordHash))
             {
-                throw new Exception("Senha incorreta");
+                throw new Exception("Senha incorreta.");
             }
 
-            return _jwtTokenGenerator.GenerateToken(user);
+            var accessToken = _jwtTokenGenerator.GenerateAccessToken(user);
+            var refreshToken = _jwtTokenGenerator.GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+
+            await _context.SaveChangesAsync();
+
+            return new LoginResponse
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken
+            };
+        }
+
+        public async Task<LoginResponse> RefreshTokenAsync(string refreshToken)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+
+            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            {
+                throw new Exception("Refresh token inválido ou expirado.");
+            }
+
+            var accessToken = _jwtTokenGenerator.GenerateAccessToken(user);
+            var newRefreshToken = _jwtTokenGenerator.GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _context.SaveChangesAsync();
+
+            return new LoginResponse
+            {
+                AccessToken = accessToken,
+                RefreshToken = newRefreshToken
+            };
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -15,7 +16,7 @@ namespace QueueSystem.Application.Implements
         {
             _configuration = configuration;
         }
-        public string GenerateToken(User user)
+        public string GenerateAccessToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var jwtKey = _configuration["Jwt:Key"];
@@ -41,5 +42,13 @@ namespace QueueSystem.Application.Implements
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+                return Convert.ToBase64String(randomNumber);
+        }
+
     }
 }
