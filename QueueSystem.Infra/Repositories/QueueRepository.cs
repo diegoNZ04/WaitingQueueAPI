@@ -5,43 +5,10 @@ using QueueSystem.Infra.Data;
 
 namespace QueueSystem.Infra.Repositories
 {
-    public class QueueRepository : IQueueRepository
+    public class QueueRepository : GenericRepository<Queue>, IQueueRepository
     {
-        private readonly ApplicationContext _context;
+        public QueueRepository(ApplicationContext context) : base(context) { }
 
-        public QueueRepository(ApplicationContext context)
-        {
-            _context = context;
-        }
-
-        public async Task AddAsync(Queue queue)
-        {
-            await _context.Queues.AddAsync(queue);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteAsync(Guid id)
-        {
-            var queue = await _context.Queues.FindAsync(id);
-
-            if (queue != null)
-            {
-                _context.Queues.Remove(queue);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task<List<Queue>> GetAllAsync()
-        {
-            return await _context.Queues.ToListAsync();
-        }
-
-        public async Task<Queue> GetByIdAsync(int id)
-        {
-            return await _context.Queues
-                .Include(q => q.Clients)
-                .FirstOrDefaultAsync(q => q.Id == id);
-        }
 
         public async Task<List<Client>> GetClientsInQueueAsync(int queueId)
         {
@@ -52,10 +19,5 @@ namespace QueueSystem.Infra.Repositories
                 .ToListAsync();
         }
 
-        public async Task UpdateAsync(Queue queue)
-        {
-            _context.Queues.Update(queue);
-            await _context.SaveChangesAsync();
-        }
     }
 }

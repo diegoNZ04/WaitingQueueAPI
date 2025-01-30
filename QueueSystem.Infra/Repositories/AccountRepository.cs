@@ -5,18 +5,9 @@ using QueueSystem.Infra.Data;
 
 namespace QueueSystem.Infra.Repositories
 {
-    public class AccountRepository : IAccountRepository
+    public class AccountRepository : GenericRepository<User>, IAccountRepository
     {
-        private readonly ApplicationContext _context;
-        public AccountRepository(ApplicationContext context)
-        {
-            _context = context;
-        }
-        public async Task AddAsync(User user)
-        {
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-        }
+        public AccountRepository(ApplicationContext context) : base(context) { }
 
         public async Task<User> GetByEmailAsync(string email)
         {

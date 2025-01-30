@@ -1,9 +1,7 @@
 namespace QueueSystem.Domain.Entities.Interfaces
 {
-    public interface IAccountRepository
+    public interface IAccountRepository : IGenericRepository<User>
     {
-        Task AddAsync(User user);
-
         Task<User> GetByEmailAsync(string email);
     }
 }

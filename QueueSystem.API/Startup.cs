@@ -27,12 +27,14 @@ namespace QueueSystem.API
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseInMemoryDatabase("QueueDb"));
 
-
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IQueueRepository, QueueRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IBackgroundRepository, BackgroundRepository>();
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IQueueService, QueueService>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
