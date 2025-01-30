@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using QueueSystem.Domain.Models;
+using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Data;
-using QueueSystem.Infra.Repositories.Interfaces;
 
 namespace QueueSystem.Infra.Repositories
 {
@@ -14,7 +14,7 @@ namespace QueueSystem.Infra.Repositories
             _context = context;
         }
 
-        public async Task AddAsync(ClientModel client)
+        public async Task AddAsync(Client client)
         {
             await _context.Clients.AddAsync(client);
             await _context.SaveChangesAsync();
@@ -30,12 +30,12 @@ namespace QueueSystem.Infra.Repositories
             }
         }
 
-        public async Task<ClientModel> GetByIdAsync(int id)
+        public async Task<Client> GetByIdAsync(int id)
         {
             return await _context.Clients.FindAsync(id);
         }
 
-        public async Task<List<ClientModel>> GetByQueueIdAsync(int queueId)
+        public async Task<List<Client>> GetByQueueIdAsync(int queueId)
         {
             return await _context.Clients
                 .Where(c => c.QueueId == queueId)
@@ -44,7 +44,7 @@ namespace QueueSystem.Infra.Repositories
                 .ToListAsync();
         }
 
-        public async Task UpdateAsync(ClientModel client)
+        public async Task UpdateAsync(Client client)
         {
             _context.Clients.Update(client);
             await _context.SaveChangesAsync();

@@ -1,9 +1,7 @@
-
-
 using Microsoft.EntityFrameworkCore;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Data;
 using QueueSystem.Infra.Repositories;
-using QueueSystem.Infra.Repositories.Interfaces;
 using QueueSystem.Infra.Services;
 using QueueSystem.Infra.Services.Interfaces;
 

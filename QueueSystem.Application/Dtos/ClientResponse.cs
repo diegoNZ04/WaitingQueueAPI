@@ -1,4 +1,4 @@
-namespace QueueSystem.Domain.Dtos
+namespace QueueSystem.Application.Dtos
 {
     public class ClientResponse
     {

@@ -35,12 +35,6 @@
             "projectReferences": {
               "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Application\\QueueSystem.Application.csproj": {
                 "projectPath": "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Application\\QueueSystem.Application.csproj"
-              },
-              "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Domain\\QueueSystem.Domain.csproj": {
-                "projectPath": "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Domain\\QueueSystem.Domain.csproj"
-              },
-              "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Infra\\QueueSystem.Infra.csproj": {
-                "projectPath": "C:\\Users\\Samsung\\OneDrive\\Área de Trabalho\\Projetos\\QueueSystem\\QueueSystem.Infra\\QueueSystem.Infra.csproj"
               }
             }
           }
@@ -156,6 +150,12 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[9.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

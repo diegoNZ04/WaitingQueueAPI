@@ -1,6 +1,6 @@
-namespace QueueSystem.Domain.Models
+namespace QueueSystem.Domain.Entities
 {
-    public class BackgroundModel
+    public class Background
     {
         public int Id { get; set; }
 
@@ -8,6 +8,6 @@ namespace QueueSystem.Domain.Models
 
         public DateTime CalledAt { get; set; } = DateTime.UtcNow;
 
-        public ClientModel Client { get; set; } = null!;
+        public Client Client { get; set; } = null!;
     }
 }

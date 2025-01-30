@@ -1,6 +1,6 @@
-using QueueSystem.Domain.Dtos;
-using QueueSystem.Domain.Models;
-using QueueSystem.Infra.Repositories.Interfaces;
+using QueueSystem.Application.Dtos;
+using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.Infra.Services
@@ -29,12 +29,12 @@ namespace QueueSystem.Infra.Services
                 .FirstOrDefault();
 
             if (nextClient == null)
-                return null;
+                throw new Exception("Não há próximo cliente."); ;
 
             nextClient.Status = "Atendido";
             await _clientRepository.UpdateAsync(nextClient);
 
-            var background = new BackgroundModel
+            var background = new Background
             {
                 ClientId = nextClient.Id,
                 CalledAt = DateTime.UtcNow

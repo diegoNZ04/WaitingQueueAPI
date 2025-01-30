@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using QueueSystem.Domain.Models;
+using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Data;
-using QueueSystem.Infra.Repositories.Interfaces;
 
 namespace QueueSystem.Infra.Repositories
 {
@@ -12,13 +12,13 @@ namespace QueueSystem.Infra.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(UserModel user)
+        public async Task AddAsync(User user)
         {
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<UserModel> GetByEmailAsync(string email)
+        public async Task<User> GetByEmailAsync(string email)
         {
             return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
         }

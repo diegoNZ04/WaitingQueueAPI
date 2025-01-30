@@ -1,7 +1,5 @@
-
-
-using QueueSystem.Domain.Models;
-using QueueSystem.Infra.Repositories.Interfaces;
+using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.Infra.Services
@@ -15,9 +13,9 @@ namespace QueueSystem.Infra.Services
             _clientRepository = clientRepository;
         }
 
-        public async Task<ClientModel> RegisterClientAsync(string name, string category, string priority, int queueId)
+        public async Task<Client> RegisterClientAsync(string name, string category, string priority, int queueId)
         {
-            var client = new ClientModel
+            var client = new Client
             {
                 Name = name,
                 Category = category,
@@ -34,7 +32,7 @@ namespace QueueSystem.Infra.Services
             var client = await _clientRepository.GetByIdAsync(clientId);
 
             if (client == null)
-                throw new Exception("Client not found");
+                throw new Exception("Client não encontrado");
 
             var clientsInQueue = await _clientRepository.GetByQueueIdAsync(client.QueueId);
 

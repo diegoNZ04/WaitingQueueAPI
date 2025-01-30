@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using QueueSystem.Domain.Dtos;
+using QueueSystem.Application.Dtos;
 using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.API.Controllers

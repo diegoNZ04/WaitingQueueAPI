@@ -1,6 +1,6 @@
-using QueueSystem.Domain.Models;
+using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Data;
-using QueueSystem.Infra.Repositories.Interfaces;
 
 namespace QueueSystem.Infra.Repositories
 {
@@ -11,7 +11,7 @@ namespace QueueSystem.Infra.Repositories
         {
             _context = context;
         }
-        public async Task AddAsync(BackgroundModel background)
+        public async Task AddAsync(Background background)
         {
             await _context.Backgrounds.AddAsync(background);
             await _context.SaveChangesAsync();
@@ -27,7 +27,7 @@ namespace QueueSystem.Infra.Repositories
             }
         }
 
-        public Task UpdateAsync(BackgroundModel background)
+        public Task UpdateAsync(Background background)
         {
             throw new NotImplementedException();
         }

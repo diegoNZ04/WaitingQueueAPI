@@ -1,4 +1,6 @@
-using QueueSystem.Domain.Dtos;
+
+
+using QueueSystem.Application.Dtos;
 
 namespace QueueSystem.Infra.Services.Interfaces
 {

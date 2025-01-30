@@ -1,6 +1,6 @@
 using QueueSystem.Domain.Enums;
 
-namespace QueueSystem.Domain.Dtos
+namespace QueueSystem.Application.Dtos
 {
     public class RegisterUserRequest
     {

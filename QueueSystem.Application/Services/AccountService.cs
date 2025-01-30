@@ -1,6 +1,7 @@
-using QueueSystem.Domain.Dtos;
-using QueueSystem.Domain.Models;
-using QueueSystem.Infra.Repositories.Interfaces;
+
+using QueueSystem.Application.Dtos;
+using QueueSystem.Domain.Entities;
+using QueueSystem.Domain.Entities.Interfaces;
 using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.Infra.Services
@@ -27,7 +28,7 @@ namespace QueueSystem.Infra.Services
 
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-            var newUser = new UserModel
+            var newUser = new User
             {
                 Username = request.Username,
                 Email = request.Email,
