@@ -56,8 +56,8 @@ Swagger/OpenAPI para documentação da API
 #### Clone o repositório:
 
 ```
-git clone https://github.com/seu-usuario/sistema-filas-atendimento.git
-cd sistema-filas-atendimento
+git clone https://github.com/diegoNZ04/WaitingQueueAPI.git
+cd WaitingQueueAPI
 ```
 
 #### Configure o banco de dados:
