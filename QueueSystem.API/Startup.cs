@@ -25,12 +25,8 @@ namespace QueueSystem.API
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            /*
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            */
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseInMemoryDatabase("QueueDb"));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IClientRepository, ClientRepository>();

@@ -12,8 +12,8 @@ using QueueSystem.Infra.Data;
 namespace QueueSystem.Infra.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250123184533_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250131192221_FinishGoodMigration")]
+    partial class FinishGoodMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace QueueSystem.Infra.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("QueueSystem.Domain.Models.BackgroundModel", b =>
+            modelBuilder.Entity("QueueSystem.Domain.Entities.Background", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,13 +41,12 @@ namespace QueueSystem.Infra.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId")
-                        .IsUnique();
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Backgrounds");
                 });
 
-            modelBuilder.Entity("QueueSystem.Domain.Models.ClientModel", b =>
+            modelBuilder.Entity("QueueSystem.Domain.Entities.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,14 +62,16 @@ namespace QueueSystem.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("QueueId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -79,7 +80,7 @@ namespace QueueSystem.Infra.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("QueueSystem.Domain.Models.QueueModel", b =>
+            modelBuilder.Entity("QueueSystem.Domain.Entities.Queue", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,25 +97,64 @@ namespace QueueSystem.Infra.Migrations
                     b.ToTable("Queues");
                 });
 
-            modelBuilder.Entity("QueueSystem.Domain.Models.BackgroundModel", b =>
+            modelBuilder.Entity("QueueSystem.Domain.Entities.User", b =>
                 {
-                    b.HasOne("QueueSystem.Domain.Models.ClientModel", null)
-                        .WithOne()
-                        .HasForeignKey("QueueSystem.Domain.Models.BackgroundModel", "ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("QueueSystem.Domain.Models.ClientModel", b =>
+            modelBuilder.Entity("QueueSystem.Domain.Entities.Background", b =>
                 {
-                    b.HasOne("QueueSystem.Domain.Models.QueueModel", null)
+                    b.HasOne("QueueSystem.Domain.Entities.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("QueueSystem.Domain.Entities.Client", b =>
+                {
+                    b.HasOne("QueueSystem.Domain.Entities.Queue", "Queue")
                         .WithMany("Clients")
                         .HasForeignKey("QueueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Queue");
                 });
 
-            modelBuilder.Entity("QueueSystem.Domain.Models.QueueModel", b =>
+            modelBuilder.Entity("QueueSystem.Domain.Entities.Queue", b =>
                 {
                     b.Navigation("Clients");
                 });
