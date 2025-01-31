@@ -90,42 +90,20 @@ A API estará disponível em http://localhost:5282.
 
 ### Autenticação
 
-#### Registro de Usuário:
-
-`POST /api/account/register`
-
-#### Login:
-
-`POST /api/account/login`
-
-#### Refresh Token:
-
-`POST /api/account/refresh-token`
+ - Registro de Usuário: `POST /api/account/register`
+- Login: `POST /api/account/login`
+- Refresh Token: `POST /api/account/refresh-token`
 
 ### Filas de Atendimento
 
-#### Listar Clientes Da Fila
-
-`GET api/queue`
-
-#### Chamar Próximo Cliente
-
-`POST api/queue/next`
+- Listar Clientes Da Fila: `GET api/queue`
+- Chamar Próximo Cliente: `POST api/queue/next`
 
 ### Clientes
 
-#### Registar Clientes Na Fila
-
-`POST api/client`
-
-#### Consultar Posição do Cliente
-
-`GET api/client/{id}/position`
-
-#### Cancelar Registro de Cliente
-
-`DELETE api/client/{id}`
-
+- Registar Clientes Na Fila: `POST api/client`
+- Consultar Posição do Cliente: `GET api/client/{id}/position`
+- Cancelar Registro de Cliente: `DELETE api/client/{id}`
 
 ## Estrutura do Projeto
 ```
