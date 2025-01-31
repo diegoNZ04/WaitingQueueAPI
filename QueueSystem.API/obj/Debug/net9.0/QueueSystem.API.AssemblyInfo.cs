@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QueueSystem.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c1cf858367bc8bcdc316f4325ee9f318fa188293")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4ba5d9f06522d28c64223e4f8443b70621a9762")]
 [assembly: System.Reflection.AssemblyProductAttribute("QueueSystem.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QueueSystem.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

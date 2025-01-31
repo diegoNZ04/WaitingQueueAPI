@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QueueSystem.Application.Dtos;
@@ -42,6 +43,19 @@ namespace QueueSystem.API.Controllers
         {
             var response = await _accountService.RefreshTokenAsync(request.RefreshToken);
             return Ok(response);
+        }
+
+        [Authorize(Roles = "Admin, User")]
+        [HttpPost("api/account/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (userId != null)
+            {
+                await _accountService.RevokeRefreshTokenAsync(int.Parse(userId));
+            }
+
+            return Ok(new { message = "Logout realizado com sucesso." });
         }
     }
 }

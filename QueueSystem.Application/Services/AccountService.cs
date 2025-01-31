@@ -105,5 +105,16 @@ namespace QueueSystem.Infra.Services
                 RefreshToken = newRefreshToken
             };
         }
+
+        public async Task RevokeRefreshTokenAsync(int userId)
+        {
+            var user = await _accountRepository.GetByIdAsync(userId);
+            if (user != null)
+            {
+                user.RefreshToken = string.Empty;
+                user.RefreshTokenExpiryTime = DateTime.MinValue;
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

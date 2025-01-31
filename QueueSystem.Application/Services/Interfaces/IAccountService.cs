@@ -7,5 +7,6 @@ namespace QueueSystem.Infra.Services.Interfaces
         public Task<ServiceResponse> RegisterUserAsync(RegisterUserRequest request);
         public Task<LoginResponse> LoginUserAsync(string email, string password);
         public Task<LoginResponse> RefreshTokenAsync(string refreshToken);
+        public Task RevokeRefreshTokenAsync(int userId);
     }
 }
