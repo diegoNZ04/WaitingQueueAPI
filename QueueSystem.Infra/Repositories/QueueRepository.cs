@@ -19,5 +19,10 @@ namespace QueueSystem.Infra.Repositories
                 .ToListAsync();
         }
 
+        public async Task<Queue> GetByCategoryAsync(string category)
+        {
+            return await _context.Queues.FindAsync(category);
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using QueueSystem.Application.Dtos;
 using QueueSystem.Infra.Services.Interfaces;
 
 namespace QueueSystem.API.Controllers
@@ -15,7 +16,15 @@ namespace QueueSystem.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("api/queue")]
+        [HttpPost("/api/queue/create")]
+        public async Task<IActionResult> CreateQueue([FromBody] CreateQueueRequest request)
+        {
+            var queue = await _queueService.CreateQueueAsync(request.Category, request.Description);
+            return Ok(queue);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("api/queue/list")]
         public async Task<IActionResult> ListClientsInQueue([FromQuery] int queueId)
         {
             var clients = await _queueService.ListAllClientsInQueueAsync(queueId);

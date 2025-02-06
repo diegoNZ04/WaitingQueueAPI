@@ -19,6 +19,29 @@ namespace QueueSystem.Infra.Services
             _clientRepository = clientRepository;
             _backgroundRepository = backgroundRepository;
         }
+        public async Task<QueueResponse> CreateQueueAsync(string category, string description)
+        {
+            var existingQueue = await _queueRepository.GetByCategoryAsync(category);
+
+            if (existingQueue != null)
+                throw new Exception("Já existe uma fila com essa categoria");
+
+            var queue = new Queue
+            {
+                Category = category,
+                Description = description
+            };
+
+            await _queueRepository.AddAsync(queue);
+
+            return new QueueResponse
+            {
+                Id = queue.Id,
+                Category = queue.Category,
+                Description = queue.Category,
+                CreatedAt = queue.CreatedAt
+            };
+        }
         public async Task<CallNextClientResponse> CallNextClientAsync(int queueId)
         {
             var clientsInQueue = await _queueRepository.GetClientsInQueueAsync(queueId);
