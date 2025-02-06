@@ -7,14 +7,23 @@ namespace QueueSystem.Infra.Services
     public class ClientService : IClientService
     {
         private readonly IClientRepository _clientRepository;
+        private readonly IQueueRepository _queueRepository;
 
-        public ClientService(IClientRepository clientRepository)
+        public ClientService(IClientRepository clientRepository, IQueueRepository queueRepository)
         {
             _clientRepository = clientRepository;
+            _queueRepository = queueRepository;
         }
 
         public async Task<Client> RegisterClientAsync(string name, string category, string priority, int queueId)
         {
+            var queue = await _queueRepository.GetByIdAsync(queueId);
+
+            if (queue == null)
+            {
+                throw new Exception($"Fila com o ID {queueId} não encontrada.");
+            }
+
             var client = new Client
             {
                 Name = name,
@@ -23,7 +32,10 @@ namespace QueueSystem.Infra.Services
                 QueueId = queueId
             };
 
-            await _clientRepository.AddAsync(client);
+            queue.Clients.Enqueue(client);
+
+            await _queueRepository.UpdateAsync(queue);
+
             return client;
         }
 

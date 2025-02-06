@@ -29,7 +29,7 @@ namespace QueueSystem.API.Controllers
         {
             var clients = await _queueService.ListAllClientsInQueueAsync(queueId);
 
-            if (clients == null || !clients.Any())
+            if (clients == null || clients.Count == 0)
             {
                 return NotFound(new { Message = "Não há clientes na fila" });
             }

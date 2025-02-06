@@ -44,18 +44,18 @@ namespace QueueSystem.Infra.Services
         }
         public async Task<CallNextClientResponse> CallNextClientAsync(int queueId)
         {
-            var clientsInQueue = await _queueRepository.GetClientsInQueueAsync(queueId);
+            var queue = await _queueRepository.GetByIdAsync(queueId);
 
-            var nextClient = clientsInQueue
-                .OrderBy(c => c.Priority == "Prioritário" ? 0 : 1)
-                .ThenBy(c => c.Status == "Em Espera" ? 0 : 1)
-                .FirstOrDefault();
+            var nextClient = queue.Clients.Peek();
 
             if (nextClient == null)
-                throw new Exception("Não há próximo cliente."); ;
+                throw new Exception("Não há próximo cliente.");
 
             nextClient.Status = "Atendido";
-            await _clientRepository.UpdateAsync(nextClient);
+
+            queue.Clients.Dequeue();
+
+            await _queueRepository.UpdateAsync(queue);
 
             var background = new Background
             {
@@ -73,8 +73,6 @@ namespace QueueSystem.Infra.Services
                 },
                 Position = 1
             };
-
-
 
         }
 

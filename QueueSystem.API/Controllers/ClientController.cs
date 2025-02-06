@@ -17,7 +17,7 @@ namespace QueueSystem.API.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpPost("api/client")]
+        [HttpPost("api/client/register-in-queue")]
         public async Task<IActionResult> RegisterClient([FromBody] RegisterClientRequest request)
         {
             var client = await _clientService.RegisterClientAsync(
@@ -39,7 +39,7 @@ namespace QueueSystem.API.Controllers
         }
 
         [Authorize(Roles = "Admin, User")]
-        [HttpDelete("api/client/{id}")]
+        [HttpDelete("api/client/{id}/delete")]
         public async Task<IActionResult> Unsubscribe(int id)
         {
             await _clientService.UnsubscribeAsync(id);
